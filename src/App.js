@@ -1,5 +1,7 @@
+//На всех строчка используется декларативный стиль, тк нет описания шагов получения результата, а только описание необходимого результата.
 import logo from "./logo.svg";
 import "./App.css";
+import { nowYear } from "./index";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         >
           Learn React
         </a>
+        <div className="nowYear">{nowYear}</div>
       </header>
     </div>
   );
