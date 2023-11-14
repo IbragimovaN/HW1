@@ -11,4 +11,4 @@ root.render(
   </React.StrictMode>,
 );
 
-export const nowYear = new Date().getFullYear();
+// export const nowYear = new Date().getFullYear();
