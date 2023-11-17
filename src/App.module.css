@@ -10,7 +10,10 @@
   height: 500px;
   display: grid;
   grid-template: repeat(6, 1fr)/repeat(3, 1fr);
-  
+   
+}
+.calculator :nth-child(15){
+  grid-column: 2/4;
 }
 .display{
   grid-column: 1/4;
@@ -27,8 +30,3 @@
   display: grid;
   place-items: center;
 }
-
-.resetBtn{
-  grid-column: 2/4;
-}
-
