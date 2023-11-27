@@ -1,0 +1,15 @@
+.cell{
+  font-size: 30px;
+}
+.field{
+  display: grid;
+  grid-template: repeat(3, 1fr)/repeat(3, 1fr);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+}
+
+.win{
+  background-color: #d82525;
+}
