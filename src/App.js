@@ -1,26 +1,49 @@
 import styles from "./App.module.css";
-import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
+
+const sendFormData = (formData) => {
+  console.log(formData);
+};
 
 function App() {
-  const [stateCount, setStateCount] = useState(0);
-  const refCount = useRef(0);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      //начальное значение
 
-  const onClickRefCount = () => {
-    refCount.current += 1;
-    console.log("refCount = " + refCount.current);
+      login: "",
+    },
+  });
+
+  const loginError = errors.login?.message;
+
+  const loginProps = {
+    minLength: {
+      value: 3,
+      message: "Неверный логин. Должно быть не меньше 3 символов",
+    },
+    maxLength: {
+      value: 20,
+      message: "Неверный логин. Должно быть не больше 20 символов",
+    },
+    pattern: {
+      value: /^[\w_]*$/,
+      message:
+        "Неверный логин. Допустимые символы: буквы, цифры и нижнее подчёркивание",
+    },
   };
-
-  const onClickStateCount = () => {
-    setStateCount(stateCount + 1);
-    console.log("stateCount = " + stateCount + 1);
-  };
-
   return (
     <div className={styles.App}>
-      <p>refCount: {refCount.current}</p>
-      <button onClick={onClickRefCount}>Прибавить к refCount</button>
-      <p>stateCount: {stateCount}</p>
-      <button onClick={onClickStateCount}>Прибавить к stateCount</button>
+      <form onSubmit={handleSubmit(sendFormData)}>
+        {loginError && <div>{loginError}</div>}
+        <input name="login" type="text" {...register("login", loginProps)} />
+        <button type="submit" disabled={!!loginError}>
+          отправить
+        </button>
+      </form>
     </div>
   );
 }
