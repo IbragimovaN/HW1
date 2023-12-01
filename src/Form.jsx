@@ -38,23 +38,15 @@ export const Form = () => {
 
 	const onChangeCopyPassword = (target) => {
 		updateState("copyPassword", target.value);
-		validationOnChangeCopyPassword(target,setCopyPasswordError)
+		validationOnChangeCopyPassword(target, password,setCopyPasswordError, submitButtonRef)
+
 	};
 
 	const onBlurCopyPassword = (target) => {
 		validationBlurCopyPassword(target, password, setCopyPasswordError);
 	};
 
-	if (
-		emailError === null &&
-		email !== "" &&
-		passwordError === null &&
-		password !== "" &&
-		copyPasswordError === null &&
-		copyPassword !== ""
-	) {
-		submitButtonRef.current.focus();
-	}
+	// console.log(submitButtonRef.current)
 
 	const { getState, updateState } = useStore();
 	const { email, password, copyPassword } = getState();

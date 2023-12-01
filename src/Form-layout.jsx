@@ -64,7 +64,7 @@ export const FormLayout = ({
 					className={`${styles.formInput} ${styles.formBtn}`}
 					type="submit"
 					ref={submitButtonRef}
-					disabled={!!emailError || !!passwordError || !!copyPasswordError}
+					disabled={!!emailError || !!passwordError}
 				>
 					отправить
 				</button>
