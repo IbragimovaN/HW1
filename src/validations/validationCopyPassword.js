@@ -4,19 +4,23 @@ export const validationBlurCopyPassword = (target, password, set) => {
 	}
 };
 
+import * as yup from "yup";
+import { validateAndGetErrorMessage } from "./validateAndGetErrorMassage";
+
 export const validationOnChangeCopyPassword = (
 	target,
 	password,
 	set,
 	submitButtonRef,
 ) => {
-	if (target.value !== "") {
-		set(null);
-	}
-	let newError = null;
-	if (target.value !== password && target.value !== "") {
-		newError = "Пароли должны совпадать";
-	}
+	const passwordCopyChangeSchema = yup
+		.string()
+		.oneOf([yup.ref(password), null], "Пароли должны совпадать");
+
+	const newError = validateAndGetErrorMessage(
+		passwordCopyChangeSchema,
+		target.value,
+	);
 	set(newError);
 
 	if (target.value === password) {

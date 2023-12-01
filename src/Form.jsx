@@ -8,9 +8,10 @@ import {
 	validationOnBlurEmail,
 	validationOnChangePassword,
 	validationOnBlurPassword,
-	validationBlurCopyPassword,
+	// validationBlurCopyPassword,
 	validationOnChangeCopyPassword,
 } from "./validations";
+
 
 export const Form = () => {
 	const [emailError, setEmailError] = useState(null);
@@ -25,6 +26,7 @@ export const Form = () => {
 
 	const onBlurEmail = (target) => {
 		validationOnBlurEmail(target, setEmailError);
+
 	};
 
 	const onChangePassword = (target) => {
@@ -42,14 +44,12 @@ export const Form = () => {
 
 	};
 
-	const onBlurCopyPassword = (target) => {
-		validationBlurCopyPassword(target, password, setCopyPasswordError);
-	};
-
-	// console.log(submitButtonRef.current)
-
+	// const onBlurCopyPassword = (target) => {
+	// 	validationBlurCopyPassword(target, password, setCopyPasswordError);
+	// };
 	const { getState, updateState } = useStore();
 	const { email, password, copyPassword } = getState();
+
 
 	return (
 		<FormLayout
@@ -65,7 +65,7 @@ export const Form = () => {
 			onBlurPassword={onBlurPassword}
 			updateState={updateState}
 			copyPasswordError={copyPasswordError}
-			onBlurCopyPassword={onBlurCopyPassword}
+			// onBlurCopyPassword={onBlurCopyPassword}
 			onChangeCopyPassword={onChangeCopyPassword}
 			submitButtonRef={submitButtonRef}
 		/>

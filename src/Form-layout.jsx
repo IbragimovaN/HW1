@@ -14,7 +14,7 @@ export const FormLayout = ({
 	onChangePassword,
 	onBlurPassword,
 	copyPasswordError,
-	onBlurCopyPassword,
+	// onBlurCopyPassword,
 	onChangeCopyPassword,
 	submitButtonRef,
 }) => {
@@ -58,7 +58,7 @@ export const FormLayout = ({
 					name="password"
 					value={copyPassword}
 					onChange={({ target }) => onChangeCopyPassword(target)}
-					onBlur={({ target }) => onBlurCopyPassword(target)}
+					// onBlur={({ target }) => onBlurCopyPassword(target)}
 				/>
 				<button
 					className={`${styles.formInput} ${styles.formBtn}`}

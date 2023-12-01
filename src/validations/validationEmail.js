@@ -1,23 +1,23 @@
 import { patternEmail } from "../constants";
+import * as yup from "yup";
+import { validateAndGetErrorMessage } from "./validateAndGetErrorMassage";
+
+const emailChangeSchema = yup
+	.string()
+	.matches(patternEmail, "Неверный формат email")
+	.max(30, "Должно быть не больше 30 символов");
+
+const emailBlurSchema = yup
+	.string()
+	.matches(patternEmail, "Неверный формат email")
+	.min(5, "Email не может содержать менее 5 символов");
 
 export const validationOnChengeEmail = (target, set) => {
-	if (target.value === "") {
-		set(null);
-	}
-	if (patternEmail.test(target.value)) {
-		set(null);
-	}
+	const newError = validateAndGetErrorMessage(emailChangeSchema, target.value);
+	set(newError);
 };
 
 export const validationOnBlurEmail = (target, set) => {
-	let newError = null;
-	if (!patternEmail.test(target.value) && target.value !== "") {
-		newError = "Неверный формат email";
-	} else if (target.value.length < 5 && target.value !== "") {
-		newError = "Email не может содержать менее 5 символов";
-	}
-	if (target.value === "") {
-		set(null);
-	}
+	const newError = validateAndGetErrorMessage(emailBlurSchema, target.value);
 	set(newError);
 };
