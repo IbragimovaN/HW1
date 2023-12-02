@@ -5,36 +5,26 @@ import PropTypes from "prop-types";
 export const FormLayout = ({
 	onSubmitForm,
 	emailError,
-	email,
-	password,
-	copyPassword,
-	onChangeEmail,
-	onBlurEmail,
+	emailProps,
+	register,
+	handleSubmit,
 	passwordError,
-	onChangePassword,
-	onBlurPassword,
+	passwordProps,
 	copyPasswordError,
-	// onBlurCopyPassword,
-	onChangeCopyPassword,
+	copyPasswordProps,
 	submitButtonRef,
+	onChange,
 }) => {
 	return (
 		<div className={styles.App}>
-			<form
-				className={styles.form}
-				onSubmit={(event) =>
-					onSubmitForm(event, { email, password, copyPassword })
-				}
-			>
+			<form className={styles.form} onSubmit={handleSubmit(onSubmitForm)}>
 				{emailError && <div className={styles.formError}>{emailError}</div>}
 				<input
 					className={styles.formInput}
 					type="email"
 					placeholder="Email"
 					name="email"
-					value={email}
-					onChange={({ target }) => onChangeEmail(target)}
-					onBlur={({ target }) => onBlurEmail(target)}
+					{...register("email", emailProps)}
 				/>
 				{passwordError && (
 					<div className={styles.formError}>{passwordError}</div>
@@ -44,9 +34,7 @@ export const FormLayout = ({
 					type="password"
 					placeholder="Пароль"
 					name="password"
-					value={password}
-					onChange={({ target }) => onChangePassword(target)}
-					onBlur={({ target }) => onBlurPassword(target)}
+					{...register("password", passwordProps)}
 				/>
 				{copyPasswordError && (
 					<div className={styles.formError}>{copyPasswordError}</div>
@@ -54,17 +42,17 @@ export const FormLayout = ({
 				<input
 					className={styles.formInput}
 					type="password"
-					placeholder="Пароль"
-					name="password"
-					value={copyPassword}
-					onChange={({ target }) => onChangeCopyPassword(target)}
-					// onBlur={({ target }) => onBlurCopyPassword(target)}
+					placeholder="Повторите пароль"
+					name="copyPassword"
+					{...register("copyPassword", copyPasswordProps)}
+					onChange={onChange}
 				/>
+
 				<button
 					className={`${styles.formInput} ${styles.formBtn}`}
 					type="submit"
 					ref={submitButtonRef}
-					disabled={!!emailError || !!passwordError}
+					disabled={!!emailError}
 				>
 					отправить
 				</button>
@@ -91,4 +79,11 @@ FormLayout.propTypes = {
 	onChangeCopyPassword: PropTypes.func,
 	submitButtonRef: PropTypes.object,
 	ref: PropTypes.func,
+	emailProps: PropTypes.object,
+	passwordProps: PropTypes.object,
+	copyPasswordProps: PropTypes.object,
+	register: PropTypes.func,
+	handleSubmit: PropTypes.func,
+	passwordRef: PropTypes.object,
+	onChange: PropTypes.func,
 };
