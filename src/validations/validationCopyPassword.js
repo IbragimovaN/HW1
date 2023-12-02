@@ -24,6 +24,7 @@ export const validationOnChangeCopyPassword = (
 	set(newError);
 
 	if (target.value === password) {
+		set(null);
 		submitButtonRef.current.focus();
 	}
 };
