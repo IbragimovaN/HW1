@@ -28,7 +28,7 @@ import {
 
 export const App = () => {
 	const [refreshProducts, setRefreshProducts] = useState(false);
-	const { products, isLoading } = useRequestGetProducts(refreshProducts);
+	const { products, isLoading } = useRequestGetProducts();
 	const { isCreating, requestAdd } = useRequestAdd(
 		refreshProducts,
 		setRefreshProducts,
@@ -47,7 +47,7 @@ export const App = () => {
 			{isLoading ? (
 				<div className={styles.loader}></div>
 			) : (
-				products.map(({ id, name, price }) => (
+				Object.entries(products).map(([id, { name, price }]) => (
 					<div key={id}>
 						{name} - {price} руб
 					</div>

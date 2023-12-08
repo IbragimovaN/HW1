@@ -1,16 +1,17 @@
 import { useState } from "react";
+import { ref, remove } from "firebase/database";
+import { db } from "../firebase";
 
-export const useRequestDeleting = (refreshProducts, setRefreshProducts) => {
+export const useRequestDeleting = () => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const requestDeleting = () => {
 		setIsDeleting(true);
-		fetch("http://localhost:3005/products/001", {
-			method: "DELETE",
-		})
-			.then((rawResponse) => rawResponse.json())
+
+		const tvDbRef = ref(db, "products/001");
+
+		remove(tvDbRef)
 			.then((response) => {
 				console.log("Телевизор удален:", response);
-				setRefreshProducts(!refreshProducts);
 			})
 			.finally(() => setIsDeleting(false));
 	};

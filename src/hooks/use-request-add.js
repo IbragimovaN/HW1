@@ -1,23 +1,19 @@
 import { useState } from "react";
+import { ref, push } from "firebase/database";
+import { db } from "../firebase";
 
-export const useRequestAdd = (refreshProducts, setRefreshProducts) => {
+export const useRequestAdd = () => {
 	const [isCreating, setIsCreating] = useState(false);
 
 	const requestAdd = () => {
 		setIsCreating(true);
-
-		fetch("http://localhost:3005/products", {
-			method: "POST",
-			headers: { "Content-Type": "application/json;charset=utf-8" },
-			body: JSON.stringify({
-				name: "Пылесос",
-				price: 4690,
-			}),
+		const productsDbRef = ref(db, "products");
+		push(productsDbRef, {
+			name: "Новый пылесос",
+			price: 4690,
 		})
-			.then((rawResponse) => rawResponse.json())
 			.then((response) => {
 				console.log("Пылесос добавлен, ответ сервера:", response);
-				setRefreshProducts(!refreshProducts);
 			})
 			.finally(() => setIsCreating(false));
 	};
