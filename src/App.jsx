@@ -1,6 +1,13 @@
 import React from "react";
 import styles from "./App.module.css";
-import { Routes, Route, Link, Outlet, useParams } from "react-router-dom";
+import {
+	Routes,
+	Route,
+	Link,
+	Outlet,
+	useParams,
+	NavLink,
+} from "react-router-dom";
 
 const productsList = () => [
 	{ id: 1, name: "Телевизор" },
@@ -32,6 +39,26 @@ const Catalog = () => {
 		</div>
 	);
 };
+
+const ExtendedLink = ({ to, children }) => (
+	<NavLink to={to}>
+		{({ isActive }) =>
+			isActive ? (
+				<>
+					<span className={styles.activeLink}>
+						{children}
+						<span className={styles.activeLinkIcon} />
+					</span>
+				</>
+			) : (
+				children
+			)
+		}
+	</NavLink>
+);
+
+<ExtendedLink to="/">Главная</ExtendedLink>;
+
 const Contacts = () => <div>Контент контактов</div>;
 const Product = () => {
 	const params = useParams();
@@ -60,13 +87,13 @@ export const App = () => {
 				<h3>Меню</h3>
 				<ul>
 					<li>
-						<Link to="/">Главная</Link>
+						<ExtendedLink to="/">Главная</ExtendedLink>
 					</li>
 					<li>
-						<Link to="/catalog">Каталог</Link>
+						<ExtendedLink to="/catalog">Каталог</ExtendedLink>
 					</li>
 					<li>
-						<Link to="/contacts">Контакты</Link>
+						<ExtendedLink to="/contacts">Контакты</ExtendedLink>
 					</li>
 				</ul>
 			</div>
