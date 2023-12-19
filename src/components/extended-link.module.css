@@ -1,0 +1,12 @@
+.activeLink {
+	position: relative;
+}
+.activeLinkIcon {
+	display: block;
+	background-color: #fba904;
+	width: 7px;
+	height: 7px;
+	position: absolute;
+	right: -10px;
+	top: 9px;
+}
