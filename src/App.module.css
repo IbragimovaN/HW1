@@ -1,4 +1,7 @@
 .app {
+	width: 100vw;
+	height: 100vh;
+	background-color: bisque;
 	text-align: center;
 }
 
@@ -6,15 +9,8 @@
 	color: rgb(253, 137, 4);
 	text-decoration: none;
 }
-.activeLink {
-	position: relative;
-}
-.activeLinkIcon {
-	display: block;
-	background-color: #fba904;
-	width: 7px;
-	height: 7px;
-	position: absolute;
-	right: -10px;
-	top: 9px;
+.menu {
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row;
 }
