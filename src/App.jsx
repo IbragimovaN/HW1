@@ -1,60 +1,63 @@
-import { Component, useEffect, useState } from "react";
 import styles from "./App.module.css";
 
-export const App = ({ message }) => {
-	const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+export const WithLoggining = (Component) => {
+	const NewComponent = (props) => {
+		console.log(props.user);
 
-	useEffect(() => {
-		console.log(message);
-		const updateScreenWidth = () => {
-			setScreenWidth(window.innerWidth);
-		};
+		return <Component {...props} />;
+	};
 
-		window.addEventListener("resize", updateScreenWidth);
-		return () => window.removeEventListener("resize", updateScreenWidth);
-	}, [screenWidth, message]);
+	return NewComponent;
+};
+
+export const WithLogginingAndColor = (Component, color) => {
+	const NewComponent = (props) => {
+		console.log(props.user);
+
+		return (
+			<span style={{ color }}>
+				<Component {...props} />
+			</span>
+		);
+	};
+
+	return NewComponent;
+};
+
+export const HelloMessage = ({ user }) => {
+	return <span>Привет {user}</span>;
+};
+
+// export const GoodbyeMessage = ({ user }) => {
+// 	return <span>До свидания {user}</span>;
+// };
+
+const HelloMessageWithLoggin = WithLoggining(HelloMessage);
+const HelloMessageWithLogginAndColorRed = WithLogginingAndColor(
+	HelloMessage,
+	"red",
+);
+
+export const UserWidget = ({ Message }) => {
+	const user = "Maxim";
 
 	return (
-		<div className={styles.app}>
-			{message}: {screenWidth}
+		<div>
+			<div>Текущий пользователь: {user}</div>
+			<div>Сообщение:</div>
+			<HelloMessageWithLoggin user={user} />
+			<HelloMessageWithLogginAndColorRed user={user} />
+			{/* <Message user={user} /> */}
 		</div>
 	);
 };
 
-export class OldApp extends Component {
-	//state = window.innerWidth как вариант можно объвить здесь
-	constructor(props) {
-		super(props);
-		//this.state = window.innerWidth; но обычно объявляют здесь
-		/*тут нет такой свободы выбора названия состояний как в useState поэтому для того чтобы было понятнее запишем как объект*/
-		this.state = {
-			screenWidth: window.innerWidth,
-		};
-		/* 1 способ привязки контекста к функции: */
-		// this.updateScreenWidth = this.updateScreenWidth.bind(this)
-	}
-	// updateScreenWidth() {
-	// 	this.setState({ screenWidth: window.innerWidth });
-	// }
-
-	/* 2 способ: пишем как поле класса чтобы привязать контекст(чтобы innerWidth взялась из конструктора)*/
-	updateScreenWidth = () => {
-		this.setState({ screenWidth: window.innerWidth });
-	};
-
-	componentDidMount() {
-		console.log(this.props.message);
-		window.addEventListener("resize", this.updateScreenWidth);
-	}
-
-	componentWillUnmount = () => {
-		window.removeEventListener("resize", this.updateScreenWidth);
-	};
-	render() {
-		return (
-			<div className={styles.app}>
-				{this.props.message}:{this.state.screenWidth}
-			</div>
-		);
-	}
-}
+export const App = () => {
+	return (
+		<div className={styles.app}>
+			<UserWidget />
+			{/* <UserWidget Message={HelloMessage} />
+			<UserWidget Message={GoodbyeMessage} /> */}
+		</div>
+	);
+};
