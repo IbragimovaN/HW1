@@ -1,53 +1,60 @@
-import { useState, memo, useCallback, useMemo } from "react";
+import { Component, useEffect, useState } from "react";
 import styles from "./App.module.css";
 
-export const Field = memo(({ name, label, value, onChange }) => {
-	console.log(name);
-	return (
-		<label>
-			<span>
-				{label}:
-				<input
-					name={name}
-					value={value}
-					onChange={({ target }) => onChange(target)}
-				></input>
-			</span>
-		</label>
-	);
-});
+export const App = ({ message }) => {
+	const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-export const App = () => {
-	console.log("------------App-----------");
-	const [num, setNum] = useState(0);
-	const [degree, setDegree] = useState(0);
+	useEffect(() => {
+		console.log(message);
+		const updateScreenWidth = () => {
+			setScreenWidth(window.innerWidth);
+		};
 
-	const onNumChange = useCallback((target) => {
-		setNum(Number(target.value));
-	}, []);
-
-	const onDegreeChange = useCallback((target) => {
-		setDegree(Number(target.value));
-	}, []);
-
-	const hardCalculateNum = useMemo(() => {
-		new Array(20000000).fill(0).reduce((acc, item) => acc + item, num);
-	}, [num]);
-
-	const result = Math.pow(hardCalculateNum, degree);
+		window.addEventListener("resize", updateScreenWidth);
+		return () => window.removeEventListener("resize", updateScreenWidth);
+	}, [screenWidth, message]);
 
 	return (
 		<div className={styles.app}>
-			<div>
-				{num} в степени {degree} = {result}
-			</div>
-			<Field name="numb" label="Число" value={num} onChange={onNumChange} />
-			<Field
-				name="degr"
-				label="Степень"
-				value={degree}
-				onChange={onDegreeChange}
-			/>
+			{message}: {screenWidth}
 		</div>
 	);
 };
+
+export class OldApp extends Component {
+	//state = window.innerWidth как вариант можно объвить здесь
+	constructor(props) {
+		super(props);
+		//this.state = window.innerWidth; но обычно объявляют здесь
+		/*тут нет такой свободы выбора названия состояний как в useState поэтому для того чтобы было понятнее запишем как объект*/
+		this.state = {
+			screenWidth: window.innerWidth,
+		};
+		/* 1 способ привязки контекста к функции: */
+		// this.updateScreenWidth = this.updateScreenWidth.bind(this)
+	}
+	// updateScreenWidth() {
+	// 	this.setState({ screenWidth: window.innerWidth });
+	// }
+
+	/* 2 способ: пишем как поле класса чтобы привязать контекст(чтобы innerWidth взялась из конструктора)*/
+	updateScreenWidth = () => {
+		this.setState({ screenWidth: window.innerWidth });
+	};
+
+	componentDidMount() {
+		console.log(this.props.message);
+		window.addEventListener("resize", this.updateScreenWidth);
+	}
+
+	componentWillUnmount = () => {
+		window.removeEventListener("resize", this.updateScreenWidth);
+	};
+	render() {
+		return (
+			<div className={styles.app}>
+				{this.props.message}:{this.state.screenWidth}
+			</div>
+		);
+	}
+}
