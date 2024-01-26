@@ -5,10 +5,6 @@ export class Field extends Component {
 		super(props);
 	}
 	render() {
-		// console.log(this.props.item);
 		return <div className="field">{this.props.item}</div>;
-	}
-	componentDidUpdate() {
-		console.log("upd field");
 	}
 }

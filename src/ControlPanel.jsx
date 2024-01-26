@@ -8,7 +8,6 @@ export class ControlPanel extends Component {
 		this.state = {
 			inputText: "",
 			arr: props.arr,
-			name: props.name,
 		};
 		this.onChangeInputText = this.onChangeInputText.bind(this);
 		this.onSubmitText = this.onSubmitText.bind(this);
@@ -25,10 +24,7 @@ export class ControlPanel extends Component {
 		console.log(newArr);
 		this.props.handleSubmit(newArr);
 	}
-	// componentDidUpdate() {
-	// 	console.log("upd ContrPanel");
-	// 	window.addEventListener("submit", this.onSubmitText);
-	// }
+
 	render() {
 		return (
 			<div className="controlPanel">

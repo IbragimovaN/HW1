@@ -2,7 +2,7 @@ import { createStore } from "redux";
 
 export const initialState = {
 	inputText: "",
-	array: ["новое поле", "еще"],
+	arr: ["новое поле", "еще"],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ export const reducer = (state = initialState, action) => {
 		case "SET_ARR": {
 			return {
 				...state,
-				array: state.array.push(action.payload),
+				array: action.payload,
 			};
 		}
 
@@ -26,4 +26,4 @@ export const reducer = (state = initialState, action) => {
 	}
 };
 
-const store = createStore(reducer);
+export const store = createStore(reducer);
