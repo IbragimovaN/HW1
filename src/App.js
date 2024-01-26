@@ -1,60 +1,40 @@
-import React from "react";
-import styles from "./App.module.css";
-// import { useState, useEffect } from "react";
+import React, { Component } from "react";
+import { ControlPanel } from "./ControlPanel";
+import { Field } from "./Field";
 
-// export function App() {
-// 	const [counter, setCounter] = useState(0);
-// 	useEffect(() => {
-// 		console.log("Первый-" + counter);
+export class App extends Component {
+	constructor(props) {
+		super(props);
 
-// 		return () => console.log("Второй-" + counter);
-// 	}, [counter]);
+		this.state = {
+			arr: ["новое поле", "еще"],
+			name: "Max",
+		};
+	}
+	// componentDidUpdate() {
+	// 	window.addEventListener("submit", this.handleSubmit);
+	// 	console.log("upd App");
+	// }
+	handleSubmit = (newValue) => {
+		this.setState({ arr: newValue });
+		console.log("запускаем handleSubmit");
+	};
 
-// 	return (
-// 		<div className={styles.app}>
-// 			<div>{counter}</div>
-// 			<button onClick={() => setCounter(counter + 1)}>+ 1</button>
-// 		</div>
-// 	);
-// }
-
-import { useEffect, useState } from "react";
-
-const PRODUCTS_MOCK = [
-	{ id: "001", name: "Телевизор", price: 39900 },
-	{ id: "002", name: "Смартфон", price: 18900 },
-	{ id: "003", name: "Фен", price: 1749 },
-];
-export const App = () => {
-	const [products, setProducts] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-
-	useEffect(() => {
-		setIsLoading(true);
-
-		new Promise((resolve) => {
-			setTimeout(() => {
-				resolve({ json: () => PRODUCTS_MOCK });
-			}, 2500);
-		})
-			.then((loadedData) => loadedData.json())
-			.then((loadedProducts) => {
-				setProducts(loadedProducts);
-			})
-			.finally(() => setIsLoading(false));
-	}, []);
-
-	return (
-		<div className={styles.app}>
-			{isLoading ? (
-				<div className={styles.loader}></div>
-			) : (
-				products.map(({ id, name, price }) => (
-					<div key={id}>
-						{name} - {price} руб
-					</div>
-				))
-			)}
-		</div>
-	);
-};
+	render() {
+		return (
+			<div className="app">
+				<div>{this.state.name}</div>
+				<div className="container">
+					{this.state.arr.map((item, index) => (
+						<Field key={index} item={item} />
+					))}
+				</div>
+				<ControlPanel
+					arr={this.state.arr}
+					name={this.state.name}
+					handleSubmit={this.handleSubmit}
+				/>
+			</div>
+		);
+	}
+}
