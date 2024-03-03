@@ -1,36 +1,72 @@
-import React, { Component } from "react";
-import { ControlPanel } from "./ControlPanel";
-import { Field } from "./Field";
-import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { getCatalog } from "./api";
+import _ from "lodash";
+import { SortSelect } from "./Sort-select";
 
-export class App extends Component {
-	constructor(props) {
-		super(props);
+const sortOption = [
+	{
+		value: "priceDESC",
+		label: "По убыванию цены",
+		sort: (data) => _.orderBy(data, ["price"], ["desc"]),
+	},
+	{
+		value: "priceASC",
+		label: "По возрастанию цены",
+		sort: (data) => _.orderBy(data, ["price"], ["asc"]),
+	},
+	{
+		value: "ratingDESC",
+		label: "По убыванию рейтинга",
+		sort: (data) => _.orderBy(data, ["rating"], ["desc"]),
+	},
+];
 
-		this.state = {
-			arr: ["первое поле", "второе поле"],
-		};
-	}
+export const App = () => {
+	const [catalog, setCatalog] = useState([]);
+	const [sortBy, setSortBy] = useState({ path: "price", order: "asc" });
+	const [currentSorting, setCurrentSorting] = useState("priceDesc");
+	// const sortData = _.orderBy(catalog, [sortBy.path], [sortBy.order]);
 
-	handleSubmit = (newValue) => {
-		this.setState({ arr: newValue });
-		console.log("запускаем handleSubmit");
+	useEffect(() => {
+		getCatalog().then((data) => setCatalog(data));
+	}, []);
+
+	const onClickSort = (e) => {
+		setCurrentSorting(e.target.value);
 	};
 
-	render() {
-		return (
-			<div className="app">
-				<div className="container">
-					{this.state.arr.map((item, index) => (
-						<Field key={index} item={item} />
+	// const onCkicjSort = () => {
+	// 	setSortBy((prevState) => ({
+	// 		...prevState,
+	// 		order: prevState.order === "desc" ? "asc" : "desc",
+	// 	}));
+	// };
+
+	useEffect(() => {
+		const sortObj = sortOption.find((item) => item.value === currentSorting);
+		if (sortObj) {
+			setCatalog(sortObj.sort(catalog));
+		}
+	}, [currentSorting, catalog]);
+
+	return (
+		<div>
+			{/* <button onClick={onCkicjSort}>сортировать по {sortBy.order}</button> */}
+			<SortSelect
+				option={sortOption}
+				onSort={onClickSort}
+				value={currentSorting}
+			/>
+			<ul>
+				{catalog.length > 0 &&
+					catalog.map(({ id, title, rating, price }) => (
+						<li style={{ border: "1px solid black" }} key={id}>
+							<div>{title}</div>
+							<div> {price}</div>
+							<div>Рейтинг: {rating}</div>
+						</li>
 					))}
-				</div>
-				<ControlPanel
-					arr={this.state.arr}
-					name={this.state.name}
-					handleSubmit={this.handleSubmit}
-				/>
-			</div>
-		);
-	}
-}
+			</ul>
+		</div>
+	);
+};

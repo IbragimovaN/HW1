@@ -1,0 +1,62 @@
+{
+	"users": [
+		{
+			"id": "001",
+			"login": "Stasya",
+			"password": "qwer3333",
+			"registered_at": "2021-09-01",
+			"role_id": ""
+		}
+	],
+	"roles": [
+		{
+			"id": 0,
+			"name": "Администратор"
+		},
+		{
+			"id": 1,
+			"name": "Модератор"
+		},
+		{
+			"id": 2,
+			"name": "Покупатель"
+		},
+		{
+			"id": 3,
+			"name": "Гость"
+		}
+	],
+
+	"catalog": [
+		{
+			"id": "001",
+			"title": "Маска для лица La Roche-Posay Очищающая матирующая",
+			"brand": "LA ROCHE-POSAY",
+			"categori": "mask",
+			"price": 2000,
+			"image_url": "https://avatars.mds.yandex.net/i?id=400a01917fbe3f34f1fa8cc0dde86123528d54ad-8174002-images-thumbs&n=13",
+			"content": "Маска для лица La Roche-Posay Очищающая матирующая - это уникальное средство, специально разработанное для глубокого очищения и матирования кожи лица. Ее инновационная формула эффективно удаляет избыток себума, загрязнения и остатки макияжа, освежая и придавая коже здоровое сияние. ",
+			"rating": 4
+		},
+		{
+			"id": "002",
+			"title": "Маска hhh",
+			"brand": "LA ROCHE-POSAY",
+			"categori": "mask",
+			"price": 1500,
+			"image_url": "https://avatars.mds.yandex.net/i?id=400a01917fbe3f34f1fa8cc0dde86123528d54ad-8174002-images-thumbs&n=13",
+			"content": "about ",
+			"rating": 3
+		},
+		{
+			"id": "001c",
+			"title": "Крем ss",
+			"brand": "LA ROCHE-POSAY",
+			"categori": "cream",
+			"price": 3000,
+			"image_url": "https://avatars.mds.yandex.net/i?id=400a01917fbe3f34f1fa8cc0dde86123528d54ad-8174002-images-thumbs&n=13",
+			"content": "about ",
+			"rating": 5
+		}
+	]
+}
