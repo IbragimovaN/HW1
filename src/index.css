@@ -1,0 +1,27 @@
+.home {
+	text-align: center;
+	background-color: #e2f6d3;
+	height: 100vh;
+	box-sizing: border-box;
+}
+
+.catalog {
+	text-align: center;
+	background-color: #f5f5b9;
+	height: 100vh;
+	box-sizing: border-box;
+}
+
+.private {
+	text-align: center;
+	background-color: #f695a5;
+	height: 100vh;
+	box-sizing: border-box;
+}
+
+.login {
+	text-align: center;
+	background-color: #d2e0fb;
+	height: 100vh;
+	box-sizing: border-box;
+}
